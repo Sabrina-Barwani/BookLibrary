@@ -1,0 +1,46 @@
+﻿@model List<Book>
+
+@{
+    ViewBag.Title = $"Books in {ViewBag.CategoryName}";
+    var cartItems = ViewBag.CartItems as List<int>;
+}
+
+<h1>Books in @ViewBag.CategoryName</h1>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Author</th>
+                <th>Publish Date</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <td>@book.Id</td>
+                    <td>@book.Title</td>
+                    <td>@book.Description</td>
+                    <td>@book.Author</td>
+                    <td>@book.PublishDate.ToShortDateString()</td>
+                    <td>
+                        @if (cartItems.Contains(book.Id))
+                        {
+                            <a asp-action="RemoveFromCart" asp-controller="Category" asp-route-bookId="@book.Id" class="btn btn-danger">Remove From Cart</a>
+                        }
+                        else
+                        {
+                            <a asp-action="AddToCart" asp-controller="Category" asp-route-bookId="@book.Id" class="btn btn-primary">Add To Cart</a>
+                        }
+                        <a class="btn">Show Description</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

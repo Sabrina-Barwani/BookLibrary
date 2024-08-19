@@ -1,0 +1,48 @@
+﻿@model List<Book>
+
+@{
+    ViewBag.Title = "Your Cart";
+}
+
+<h1>Your Cart</h1>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Author</th>
+                <th>Publish Date</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                @foreach (var book in Model)
+                {
+                    <tr>
+                        <td>@book.Id</td>
+                        <td>@book.Title</td>
+                        <td>@book.Description</td>
+                        <td>@book.Author</td>
+                        <td>@book.PublishDate.ToShortDateString()</td>
+                        <td>
+                            <a asp-controller="Category" asp-action="RemoveFromCart" asp-route-bookId="@book.Id" class="btn btn-danger">Remove From Cart</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6">Your cart is empty.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<a asp-controller="Category" asp-action="Library" class="btn btn-primary">Continue Shopping</a>

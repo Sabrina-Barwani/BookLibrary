@@ -1,0 +1,44 @@
+﻿@model List<Category>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    ViewData["Title"] = "UserHome";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Welcome Message -->
+        <div class="col-12 mb-4">
+            <h1>Welcome to BookLibrary!</h1>
+            <p class="lead">Browse our categories and manage your account.</p>
+        </div>
+
+        <!-- Categories List -->
+        <div class="col-12 mb-4">
+            <h2>Categories</h2>
+            <div class="list-group">
+                @foreach (var category in Model)
+                {
+                    <a href="@Url.Action("Category", "Category", new { id = category.Id })" class="list-group-item list-group-item-action">
+                        @category.Name
+                    </a>
+                }
+            </div>
+        </div>
+
+        <!-- Links to Cart and Manage Info -->
+        <div class="col-12 mt-4">
+            <h2>Your Account</h2>
+            <div class="list-group">
+                <a href="@Url.Action("Cart", "Category")" class="list-group-item list-group-item-action">
+                    View Cart
+                </a>
+                <a href="@Url.Action("ManageInfo", "Category")" class="list-group-item list-group-item-action">
+                    Manage Your Info
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

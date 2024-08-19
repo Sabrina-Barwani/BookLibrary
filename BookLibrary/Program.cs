@@ -1,3 +1,6 @@
+using BookLibrary.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace BookLibrary
 {
     public class Program
@@ -9,6 +12,15 @@ namespace BookLibrary
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("myConnection")));
+
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -23,6 +35,8 @@ namespace BookLibrary
             app.UseStaticFiles();
 
             app.UseRouting();
+            // Add session middleware
+            app.UseSession();
 
             app.UseAuthorization();
 
